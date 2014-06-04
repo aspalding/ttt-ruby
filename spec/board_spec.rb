@@ -23,6 +23,11 @@ describe Board do
     b.valid?("a").should eq(false)
   end
 
+  it "characters other than letters are not valid" do
+    b.place("x", 0)
+    b.valid?(0).should eq(false)
+  end
+
   it "won't place a piece in an invalid spot" do
     b.place("x", -1).should eq(["-", "-","-","-","-","-","-","-","-"])
   end
@@ -31,6 +36,9 @@ describe Board do
     b.place("x", 11).should eq(["-", "-","-","-","-","-","-","-","-"])
   end
 
-  #test if a piece is already placed for place and valid?.
+  it "won't place a piece in an taken position" do
+    b.place("x", 0)
+    b.place("o", 0).should eq(["x", "-","-","-","-","-","-","-","-"])
+  end
 
 end
