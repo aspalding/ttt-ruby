@@ -31,4 +31,6 @@ describe Board do
     b.place("x", 11).should eq(["-", "-","-","-","-","-","-","-","-"])
   end
 
+  #test if a piece is already placed for place and valid?.
+
 end
