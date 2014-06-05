@@ -25,17 +25,10 @@ class State
   end
 
   def horizontal?(board, mark)
-    count = 0
     result = false
-    for i in 0..board.length - 1
-      if i % 3 == 0
-        count = 0
-      end
-      if board[i] == mark
-        count += 1
-        if count == 3
-          result = true
-        end
+    for i in [0, 3, 6]
+      if board[i] == mark and board[i + 1] == mark and board[i + 2] == mark
+        result = true
       end
     end
     result

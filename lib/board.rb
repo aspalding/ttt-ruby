@@ -43,6 +43,7 @@ class Board
 
   def game_over(state, mark)
     if state.winner?(@board, mark)
+      puts show_board
       puts mark + " is the winner!"
       @board
     else
