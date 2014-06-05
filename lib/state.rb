@@ -1,6 +1,5 @@
 class State
   def initialize
-
   end
 
   def empty_indices(board)

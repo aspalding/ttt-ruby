@@ -41,4 +41,19 @@ describe Board do
     b.place("o", 0).should eq(["x", "-","-","-","-","-","-","-","-"])
   end
 
+  it "outputs pretty board" do
+    pretty_board = "\n- | - | -\n- | - | -\n- | - | -\n\n"
+    b.show_board.should eq(pretty_board)
+  end
+
+  it "reports winner and tie games" do
+    
+  end
+
+
+  it "spits out an invalid integer if user inputs bogus value" do
+    b.cast_input("jlsfd;l").should eq(-1)
+    b.cast_input("").should eq(-1)
+  end
+
 end
