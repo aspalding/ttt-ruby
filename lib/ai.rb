@@ -48,12 +48,18 @@ class Ai
   def max_score(current, best, move)
     best = [current, best].max
     @choice = move if best == current
+    puts "min. best/choice"
+    puts best 
+    puts @choice
     best
   end
 
   def min_score(current, best, move)
     best = [current, best].min
     @choice = move if best == current
+    puts "min. best/choice"
+    puts best
+    puts @choice
     best
   end
 
