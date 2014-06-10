@@ -16,6 +16,10 @@ class State
     empty_indices(board) == []
   end
 
+  def tie?(board)
+    full?(board) and not winner?(board, "x") and not winner?(board, "o") 
+  end
+
   def other_mark(mark)
     if mark == "x"
       "o"

@@ -22,11 +22,47 @@ describe Ai do
 
   it "if game is over, return the score for that branch" do
     board = ["o", "o", "o","-","-","-","-","-","-"]
-    a.score_move(board, a.mark, true).should eq(10)
+    a.score_move(board, 1, true).should eq(10)
     board = ["x", "x", "x","-","-","-","-","-","-"]
-    a.score_move(board, a.mark, true).should eq(-10)
+    a.score_move(board, 1, true).should eq(-10)
     board = ["x", "o", "x","x","o","o","o","x","x"]
-    a.score_move(board, a.mark, true).should eq(0)
+    a.score_move(board, 1, true).should eq(0)
+  end
+
+  it "gives a random move" do
+    move = a.rand_move
+    it = move.is_a? Integer
+    it.should eq(true)
+  end
+
+  it "should take the correct move" do 
+    board = ["x", "x", "-","-","o","-","-","-","-"]
+    a.score_move(board, 1, true)
+    a.choice.should eq(2)
+
+    board = ["x", "o", "-","-","x","-","-","-","-"]
+    a.score_move(board, 1, true)
+    a.choice.should eq(8)
+
+    board = ["o", "o", "x","-","-","-","x","-","-"]
+    a.score_move(board, 1, true)
+    a.choice.should eq(4) 
+    
+    board = ["-", "-", "o","-","o","x","x","-","x"]
+    a.score_move(board, 1, true)
+    a.choice.should eq(7) 
+    
+    #- | - | o
+    #- | o | x      PASS
+    #x | - | x
+
+    board = ["x", "x", "o","-","o","-","x","-","-"]
+    a.score_move(board, 1, true)
+    a.choice.should eq(3) # got five
+    
+    #x | x | o
+    #- | o | -      FAILS
+    #x | - | -
   end
 
 end

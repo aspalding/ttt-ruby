@@ -3,9 +3,11 @@ require 'ai'
 
 class Board
   attr_reader :board
+  @ai
 
   def initialize(n)
     @board = Array.new(n*n, "-")
+    @ai = Ai.new("o")
   end
 
   def place(mark, loc)
@@ -52,6 +54,24 @@ class Board
     end
   end
 
+  def which_turn(mark, state)
+    if mark == "o"
+      #move = @ai.rand_move(self)
+      @ai.smart_move(value_board)
+      move = @ai.choice
+      if valid?(move)
+        place("o", move)
+      else
+        which_turn(mark, state)
+      end
+    else
+      human_move("x")
+    end
+  end
+
+  def value_board
+    @board.clone
+  end
 
   def run(mark)
     state = State.new
@@ -59,7 +79,7 @@ class Board
       game_over(state, state.other_mark(mark))
     else
       puts show_board
-      human_move(mark)
+      which_turn(mark, state)
       run(state.other_mark(mark))
     end
   end

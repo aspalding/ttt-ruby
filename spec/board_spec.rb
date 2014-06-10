@@ -51,4 +51,10 @@ describe Board do
     b.cast_input("").should eq(-1)
   end
 
+  it "passed by values not by reference" do
+    board = b.value_board
+    board[8] = "x"
+    b.board.should eq(["-", "-","-","-","-","-","-","-","-"])
+  end
+
 end

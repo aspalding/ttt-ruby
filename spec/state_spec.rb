@@ -78,5 +78,17 @@ describe State do
     s.terminal?(board).should eq(true)
   end
 
+  it "reports if the board is a tie game" do
+    board = ["x", "o","x","o","o","o","x","o","x"]
+    s.tie?(board).should eq(false)
+  end
+
+  it "special case, reports corner and middle." do
+    board = ["x", "-", "x","o","x","-","-","-","-"]
+    s.middle_corner?(board, "x").should eq(true)
+    
+    board = ["-", "-", "-","o","x","-","x","-","x"]
+    s.middle_corner?(board, "x").should eq(true)
+  end
 
 end
