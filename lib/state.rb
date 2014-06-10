@@ -5,9 +5,7 @@ class State
   def empty_indices(board)
     indices = []
     for i in 0..board.length - 1
-      if board[i] == "-"
-        indices.push(i)
-      end
+      indices.push(i) if board[i] == "-"
     end
     indices
   end
@@ -31,9 +29,7 @@ class State
   def horizontal?(board, mark)
     result = false
     for i in [0, 3, 6]
-      if board[i] == mark and board[i + 1] == mark and board[i + 2] == mark
-        result = true
-      end
+      result = true if board[i] == mark and board[i + 1] == mark and board[i + 2] == mark
     end
     result
   end
@@ -41,9 +37,7 @@ class State
   def vertical?(board, mark)
     result = false
     for i in 0..2
-      if board[i] == mark and board[i + 3] == mark and board[i + 6] == mark
-        result = true
-      end
+      result = true if board[i] == mark and board[i + 3] == mark and board[i + 6] == mark  
     end
     result
   end
