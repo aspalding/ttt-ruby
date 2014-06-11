@@ -22,41 +22,48 @@ describe Ai do
 
   it "if game is over, return the score for that branch" do
     board = ["o", "o", "o","-","-","-","-","-","-"]
-    a.score_move(board, true).should eq(10)
+    a.score_move(board, "o", true).should eq(10)
     board = ["x", "x", "x","-","-","-","-","-","-"]
-    a.score_move(board, true).should eq(-10)
+    a.score_move(board, "o", true).should eq(-10)
     board = ["x", "o", "x","x","o","o","o","x","x"]
-    a.score_move(board, true).should eq(0)
+    a.score_move(board, "o", true).should eq(0)
   end
 
   it "should take the correct move" do 
     board = ["x", "x", "-","-","o","-","-","-","-"]
-    a.score_move(board, true)
+    a.score_move(board, "o", true)
     a.choice.should eq(2)
 
-    board = ["x", "o", "-","-","x","-","-","-","-"]
-    a.score_move(board, true)
-    a.choice.should eq(8)
-
     board = ["o", "o", "x","-","-","-","x","-","-"]
-    a.score_move(board, true)
+    a.score_move(board, "o", true)
     a.choice.should eq(4) 
     
     board = ["-", "-", "o","-","o","x","x","-","x"]
-    a.score_move(board, true)
+    a.score_move(board, "o", true)
     a.choice.should eq(7) 
-    
-    #- | - | o
-    #- | o | x      PASS
-    #x | - | x
 
     board = ["x", "x", "o","-","o","-","x","-","-"]
-    a.score_move(board, true)
-    a.choice.should eq(3) # got five
+    a.score_move(board, "o", true)
+    a.choice.should eq(3) 
+  end
+  
+
+  it "should take the correct move" do 
+    board = ["x", "x", "-","-","o","-","-","-","-"]
+    a.smart_move(board)
+    a.choice.should eq(2)
+
+    board = ["o", "o", "x","-","-","-","x","-","-"]
+    a.smart_move(board)
+    a.choice.should eq(4) 
     
-    #x | x | o
-    #- | o | -      FAILS
-    #x | - | -
+    board = ["-", "-", "o","-","o","x","x","-","x"]
+    a.smart_move(board)
+    a.choice.should eq(7) 
+
+    board = ["x", "x", "o","-","o","-","x","-","-"]
+    a.smart_move(board)
+    a.choice.should eq(3) 
   end
 
 end

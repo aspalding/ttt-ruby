@@ -20,27 +20,17 @@ class Ai
     end
   end
 
-  def score_move(board, maximizing)
+  def score_move(board, mark, maximizing)
     return score(board) if @state.terminal?(board)
-    if maximizing
-      best_score = -1.0/0
-      @state.empty_indices(board).each do |move|
-        board[move] = @mark
-        current = score_move(board.clone, false)
-        best_score = max_score(current, best_score, move)
-        board[move] = "-"
-      end
-      return best_score
-    else
-      best_score = 1.0/0
-      @state.empty_indices(board).each do |move|
-        board[move] = @state.other_mark(@mark)
-        current = score_move(board.clone, true)
-        best_score = min_score(current, best_score, move)
-        board[move] = "-"
-      end
-      return best_score
+    best_score = 0
+    @state.empty_indices(board).each do |move|
+      board[move] = mark if maximizing
+      board[move] = mark if !maximizing
+      current_score = -score_move(board.clone, @state.other_mark(mark), !maximizing)
+      best_score = max_score(current_score, best_score, move)
+      board[move] = "-"
     end
+    return best_score
   end
 
   def max_score(current, best, move)
@@ -49,14 +39,28 @@ class Ai
     best
   end
 
-  def min_score(current, best, move)
-    best = [current, best].min
-    @choice = move if best == current
-    best
+  def smart_move(board)
+    if board[4] == "-"
+      @choice = 4
+    elsif board[4] == "x" 
+      special_case(board)
+    else
+      score_move(board, @mark, true)
+    end
   end
 
-  def smart_move(board)
-    score_move(board, true)
+  def special_case(board)
+    if board[3] == "x" and @state.valid?(board, 5) 
+      @choice = 5 
+    elsif board[5] == "x" and @state.valid?(board, 3) 
+      @choice = 3 
+    elsif board[1] == "x" and @state.valid?(board, 7) 
+      @choice = 7
+    elsif board[7] == "x" and @state.valid?(board, 1) 
+      @choice = 1 
+    else
+      score_move(board, @mark, true)
+    end
   end
 
 end

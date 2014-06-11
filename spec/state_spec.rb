@@ -83,4 +83,9 @@ describe State do
     s.tie?(board).should eq(false)
   end
 
+  it "is driving me crazy is this it?" do
+    board = ["x", "x", "o","x","o","o","x","-","-"]
+    s.winner?(board, "x").should eq(true)
+  end
+
 end

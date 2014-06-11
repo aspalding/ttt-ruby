@@ -54,5 +54,9 @@ class State
   def terminal?(board)
     winner?(board, "x") or winner?(board, "o") or full?(board)
   end
+  
+  def valid?(board, loc)
+    board[loc] == "-" and loc > -1 and loc < board.length
+  end
 
 end
