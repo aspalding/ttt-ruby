@@ -1,5 +1,4 @@
 require 'state'
-require 'board'
 require 'ai'
 
 describe Ai do
@@ -29,41 +28,41 @@ describe Ai do
     a.score_move(board, "o", true).should eq(0)
   end
 
-  it "should take the correct move" do 
+  it "should take the correct move" do
     board = ["x", "x", "-","-","o","-","-","-","-"]
     a.score_move(board, "o", true)
     a.choice.should eq(2)
 
     board = ["o", "o", "x","-","-","-","x","-","-"]
     a.score_move(board, "o", true)
-    a.choice.should eq(4) 
-    
+    a.choice.should eq(4)
+
     board = ["-", "-", "o","-","o","x","x","-","x"]
     a.score_move(board, "o", true)
-    a.choice.should eq(7) 
+    a.choice.should eq(7)
 
     board = ["x", "x", "o","-","o","-","x","-","-"]
     a.score_move(board, "o", true)
-    a.choice.should eq(3) 
+    a.choice.should eq(3)
   end
-  
 
-  it "should take the correct move" do 
+
+  it "should take the correct move" do
     board = ["x", "x", "-","-","o","-","-","-","-"]
     a.smart_move(board)
     a.choice.should eq(2)
 
     board = ["o", "o", "x","-","-","-","x","-","-"]
     a.smart_move(board)
-    a.choice.should eq(4) 
-    
+    a.choice.should eq(4)
+
     board = ["-", "-", "o","-","o","x","x","-","x"]
     a.smart_move(board)
-    a.choice.should eq(7) 
+    a.choice.should eq(7)
 
     board = ["x", "x", "o","-","o","-","x","-","-"]
     a.smart_move(board)
-    a.choice.should eq(3) 
+    a.choice.should eq(3)
   end
 
 end
