@@ -1,7 +1,4 @@
 class State
-  def initialize
-  end
-
   def empty_indices(board)
     indices = []
     for i in 0..board.length - 1
@@ -27,19 +24,26 @@ class State
   end
 
   def horizontal?(board, mark)
-    result = false
-    for i in [0, 3, 6]
-      result = true if board[i] == mark and board[i + 1] == mark and board[i + 2] == mark
+    count = 0
+    for i in 0..board.size - 1
+      count = 0 if i % Math.sqrt(board.size) == 0
+      if board[i] == mark
+        count += 1
+        return true if count == Math.sqrt(board.size)
+      end
     end
-    result
+    return false
   end
 
   def vertical?(board, mark)
-    result = false
-    for i in 0..2
-      result = true if board[i] == mark and board[i + 3] == mark and board[i + 6] == mark  
+    for i in 0..Math.sqrt(board.size) - 1
+      count = 0
+      for j in 0..board.size - 1
+        count += 1 if (j % Math.sqrt(board.size)) == 0 and board[i+j] == mark
+      end
+      return true if count == 3  
     end
-    result
+    return false
   end
 
   def diagonal?(board, mark)

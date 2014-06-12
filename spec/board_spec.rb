@@ -43,8 +43,4 @@ describe Board do
     b.board.should eq(["-", "-","-","-","-","-","-","-","-"])
   end
 
-  it "should let player go first or second." do
-
-  end
-
 end
