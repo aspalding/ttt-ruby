@@ -53,13 +53,18 @@ describe State do
     s.vertical?(board, "x").should eq(false)
   end
 
-  it "reports status in diagonal row" do
+  it "reports status in major diagonal row" do
     board = ["x", "-", "-","-","x","-","-","-","x"]
-    s.diagonal?(board, "x").should eq(true)
-    board = ["-", "-", "x","-","x","-","x","-","-"]
-    s.diagonal?(board, "x").should eq(true)
+    s.diagonal_major?(board, "x").should eq(true)
     board = ["-", "-", "x","-","-","x","-","-","x"]
-    s.diagonal?(board, "x").should eq(false)
+    s.diagonal_major?(board, "x").should eq(false)
+  end
+
+  it "reports status in minor diagonal row" do
+    board = ["-", "-", "x","-","x","-","x","-","-"]
+    s.diagonal_minor?(board, "x").should eq(true)
+    board = ["-", "-", "x","-","-","x","-","-","x"]
+    s.diagonal_major?(board, "x").should eq(false)
   end
 
   it "reports winner" do
@@ -86,6 +91,29 @@ describe State do
   it "is driving me crazy is this it?" do
     board = ["x", "x", "o","x","o","o","x","-","-"]
     s.winner?(board, "x").should eq(true)
+  end
+
+  it "work the same 4x4" do
+    board = ["x", "x", "x","x",
+             "-", "-", "-", "-",
+             "-", "-", "-", "-",
+             "-", "-", "-", "-"]
+    s.horizontal?(board, "x").should eq(true)
+    board = ["x", "-", "-","-",
+             "x", "-", "-", "-",
+             "x", "-", "-", "-",
+             "x", "-", "-", "-"]
+    s.vertical?(board, "x").should eq(true)
+    board = ["x", "-", "-","-",
+             "-", "x", "-", "-",
+             "-", "-", "x", "-",
+             "-", "-", "-", "x"]
+    s.diagonal_major?(board, "x").should eq(true)
+    board = ["-", "-", "-","x",
+             "-", "-", "x", "-",
+             "-", "x", "-", "-",
+             "x", "-", "-", "-"]
+    s.diagonal_minor?(board, "x").should eq(true)
   end
 
 end
