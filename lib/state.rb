@@ -1,4 +1,8 @@
 class State
+  def initialize(manager)
+    @manager = manager
+  end
+
   def empty_indices(board)
     indices = []
     for i in 0..board.length - 1
@@ -12,15 +16,7 @@ class State
   end
 
   def tie?(board)
-    full?(board) and not winner?(board, "x") and not winner?(board, "o") 
-  end
-
-  def other_mark(mark)
-    if mark == "x"
-      "o"
-    else
-      "x"
-    end
+    full?(board) and not winner?(board, @manager.first) and not winner?(board, @manager.second) 
   end
 
   def horizontal?(board, mark)
@@ -71,7 +67,7 @@ class State
   end
 
   def terminal?(board)
-    winner?(board, "x") or winner?(board, "o") or full?(board)
+    winner?(board, @manager.first) or winner?(board, @manager.second) or full?(board)
   end
   
   def valid?(board, loc)

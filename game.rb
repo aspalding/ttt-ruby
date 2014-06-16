@@ -2,13 +2,19 @@ $: << File.expand_path('../lib', __FILE__)
 
 require 'board'
 require 'console'
+require 'player_manager'
 
-puts "If you'd like to go first, type 'y'. For any other input you'll go second."
-order_input = gets.chomp
+puts "enter first mark"
+first_marker = gets.chomp[0]
+
+puts "enter second mark"
+second_marker = gets.chomp[0] #This won't catch \n or -
+
+manager = Player_manager.new(first_marker, second_marker)
 
 board = Board.new(3)
+ai = Ai.new(manager.second, manager)
 
-console = Console.new(true, board) if order_input == "y"
-console = Console.new(true, board) if order_input != "y"
+console = Console.new(board, ai) 
 
-console.run("x")
+console.run(manager.first, manager)

@@ -1,16 +1,12 @@
 require 'state'
 require 'ai'
+require 'player_manager'
 
 class Console
 
-  def initialize(first, board)
+  def initialize(board, ai)
     @board =  board
-    if first
-      @ai = Ai.new("o")
-    else
-      @ai = Ai.new("x")
-    end
-    @state = State.new
+    @ai = ai
   end
 
   def show_board
@@ -35,8 +31,8 @@ class Console
     end
   end
 
-  def game_over(mark)
-    if @state.winner?(@board.board, mark)
+  def game_over(mark, state)
+    if state.winner?(@board.board, mark)
       puts show_board
       puts mark + " is the winner!"
     else
@@ -45,22 +41,29 @@ class Console
     end
   end
 
-  def which_turn(mark)
+  def which_turn(mark, manager)
     if mark == @ai.mark
       @ai.smart_move(@board.value_board)
       @board.place(@ai.mark, @ai.choice)
     else
-      human_move(@state.other_mark(@ai.mark))
+      human_move(manager.other_mark(@ai.mark))
     end
+  #  if manager.is_ai?(mark)
+  #    @ai.smart_move(@board.value_board)
+  #    @board.place(@ai.mark, @ai.choice)
+  #  else
+  #    human_move(manager.other_mark(@ai.mark))
+  #  end
   end
 
-  def run(mark)
-    if @state.terminal?(@board.board)
-      game_over(@state.other_mark(mark))
+  def run(mark, manager)
+    state = State.new(manager)
+    if state.terminal?(@board.board)
+      game_over(manager.other_mark(mark), state)
     else
       puts show_board
-      which_turn(mark)
-      run(@state.other_mark(mark))
+      which_turn(mark, manager)
+      run(manager.other_mark(mark), manager)
     end
   end
 end

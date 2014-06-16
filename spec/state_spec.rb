@@ -1,9 +1,11 @@
 require 'state'
 require 'board'
+require 'player_manager'
 
 describe State do
   let(:b) {Board.new(3)}
-  let(:s) {State.new}
+  let(:m) {Player_manager.new("x", "o")}
+  let(:s) {State.new(m)}
 
   it "returns indices of empty positions on board" do
     s.empty_indices(b.board).should eq([0, 1, 2, 3, 4, 5, 6, 7, 8])
@@ -23,17 +25,17 @@ describe State do
     s.full?(board).should eq(false)
   end
 
-  it "reports opposing player" do
-    s.other_mark("x").should eq("o")
-  end
+ # it "reports opposing player" do
+ #   s.other_mark("x").should eq("o")
+ # end
 
-  it "reports opposing player" do
-      s.other_mark("x").should eq("o")
-  end
+ # it "reports opposing player" do
+ #     s.other_mark("x").should eq("o")
+ # end
 
-  it "reports opposing player for o as well" do
-    s.other_mark("o").should eq("x")
-  end
+ # it "reports opposing player for o as well" do
+ #   s.other_mark("o").should eq("x")
+ # end
 
   it "reports status in horizontal row" do
     board = ["x", "x", "x","-","-","-","-","-","-"]
@@ -88,7 +90,7 @@ describe State do
     s.tie?(board).should eq(false)
   end
 
-  it "is driving me crazy is this it?" do
+  it "hmmm?" do
     board = ["x", "x", "o","x","o","o","x","-","-"]
     s.winner?(board, "x").should eq(true)
   end

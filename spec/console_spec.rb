@@ -4,7 +4,7 @@ require 'stringio'
 
 describe Console do
   let(:b) {Board.new(3)}
-  let(:c) {Console.new(true, b)}
+  let(:c) {Console.new(b, "x")}
 
   it "outputs pretty board" do
     pretty_board = "\n- | - | -\n- | - | -\n- | - | -\n\n"
@@ -15,14 +15,6 @@ describe Console do
     c.cast_input("jlsfd;l").should eq(-1)
     c.cast_input("").should eq(-1)
   end
-
- # it "outputs status of game when called." do
- #   stdin = StringIO.new
- #   stdin.puts(c.game_over("x"))
- #   expected = ("Tie game!\n")
- #   stdin.rewind
- #   stdin.gets.should eq(expected)
- # end
 
   it "should let player go first or second." do
 

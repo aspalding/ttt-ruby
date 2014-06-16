@@ -1,8 +1,10 @@
 require 'state'
 require 'ai'
+require 'player_manager'
 
 describe Ai do
-  let(:a) {Ai.new("o")}
+  let(:m) {Player_manager.new("x", "o")}
+  let(:a) {Ai.new("o", m)}
 
   it "scores a winning game 10" do
     board = ["o", "o", "o","-","-","-","-","-","-"]
