@@ -1,5 +1,4 @@
 require 'state'
-require 'ai'
 
 class Board
   attr_reader :board

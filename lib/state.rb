@@ -55,7 +55,7 @@ class State
 
   def diagonal_minor?(board, mark)
     count = 0
-    for i in Integer(Math.sqrt(board.size) - 1)..board.size - 1
+    for i in Integer(Math.sqrt(board.size) - 1)..board.size - (Math.sqrt(board.size))
       count += 1 if (i % (Math.sqrt(board.size) - 1)) == 0 and board[i] == mark
       return true if count == Math.sqrt(board.size)
     end

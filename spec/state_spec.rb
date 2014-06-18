@@ -4,7 +4,7 @@ require 'player_manager'
 
 describe State do
   let(:b) {Board.new(3)}
-  let(:m) {Player_manager.new("x", "o")}
+  let(:m) {Player_manager.new("x", false, "o", true)}
   let(:s) {State.new(m)}
 
   it "returns indices of empty positions on board" do
@@ -25,24 +25,20 @@ describe State do
     s.full?(board).should eq(false)
   end
 
- # it "reports opposing player" do
- #   s.other_mark("x").should eq("o")
- # end
-
- # it "reports opposing player" do
- #     s.other_mark("x").should eq("o")
- # end
-
- # it "reports opposing player for o as well" do
- #   s.other_mark("o").should eq("x")
- # end
-
   it "reports status in horizontal row" do
     board = ["x", "x", "x","-","-","-","-","-","-"]
     s.horizontal?(board, "x").should eq(true)
     board = ["-","-","-","-","-","-","x", "x", "x"]
     s.horizontal?(board, "x").should eq(true)
     board = ["-","-","-","-","-","-","o", "x", "x"]
+    s.horizontal?(board, "x").should eq(false)
+    board = ["-", "-", "-",
+             "o", "x", "x",
+             "-", "-", "-"]
+    s.horizontal?(board, "x").should eq(false)
+    board = ["o", "-", "o",
+             "-", "x", "-", 
+             "x", "-", "x"]
     s.horizontal?(board, "x").should eq(false)
   end
 
@@ -51,22 +47,46 @@ describe State do
     s.vertical?(board, "x").should eq(true)
     board = ["-", "-", "x","-","-","x","-","-","x"]
     s.vertical?(board, "x").should eq(true)
-    board = ["x", "-", "-","-","x","-","x","-","-"]
+    board = ["x", "-", "-",
+             "-", "x", "-",
+             "x", "-", "-"]
+    s.vertical?(board, "x").should eq(false) 
+    board = ["o", "-", "o",
+             "x", "o", "-", 
+             "x", "-", "x"]
     s.vertical?(board, "x").should eq(false)
   end
 
   it "reports status in major diagonal row" do
     board = ["x", "-", "-","-","x","-","-","-","x"]
     s.diagonal_major?(board, "x").should eq(true)
-    board = ["-", "-", "x","-","-","x","-","-","x"]
+    board = ["-", "-", "x",
+             "-", "-", "x",
+             "-" ,"-", "x"]
+    s.diagonal_major?(board, "x").should eq(false)
+    board = ["o", "-", "o",
+             "-", "x", "-", 
+             "x", "-", "x"]
     s.diagonal_major?(board, "x").should eq(false)
   end
 
   it "reports status in minor diagonal row" do
-    board = ["-", "-", "x","-","x","-","x","-","-"]
+    board = ["-", "-", "x",
+             "-", "x", "-",
+             "x", "-", "-"]
     s.diagonal_minor?(board, "x").should eq(true)
-    board = ["-", "-", "x","-","-","x","-","-","x"]
-    s.diagonal_major?(board, "x").should eq(false)
+    board = ["-", "-", "x",
+             "-", "-", "x", 
+             "-", "-", "x"]
+    s.diagonal_minor?(board, "x").should eq(false)
+    board = ["o", "-", "o",
+             "-", "x", "-", 
+             "x", "-", "x"]
+    s.diagonal_minor?(board, "x").should eq(false)
+    board = ["-", "-", "-",
+             "-", "x", "-", 
+             "x", "-", "o"]
+    s.diagonal_minor?(board, "x").should eq(false)
   end
 
   it "reports winner" do
@@ -76,6 +96,10 @@ describe State do
     s.winner?(board, "x").should eq(true)
     board = ["x", "x", "x","-","-","-","-","-","-"]
     s.winner?(board, "x").should eq(true)
+    board = ["o", "-", "o",
+             "-", "x", "-", 
+             "x", "-", "x"]
+    s.winner?(board, "x").should eq(false)
   end
 
   it "reports end of game (win or draw)" do

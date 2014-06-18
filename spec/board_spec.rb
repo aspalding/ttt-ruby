@@ -19,7 +19,7 @@ describe Board do
     b.valid?(9).should eq(false)
   end
 
-  it "Taken posisitions are not valid" do
+  it "Taken positions are not valid" do
     b.place("x", 0)
     b.valid?(0).should eq(false)
   end

@@ -4,17 +4,12 @@ require 'board'
 require 'console'
 require 'player_manager'
 
-puts "enter first mark"
-first_marker = gets.chomp[0]
-
-puts "enter second mark"
-second_marker = gets.chomp[0] #This won't catch \n or -
-
-manager = Player_manager.new(first_marker, second_marker)
-
 board = Board.new(3)
-ai = Ai.new(manager.second, manager)
+console = Console.new(board) 
 
-console = Console.new(board, ai) 
+p1 = console.get_player
+p2 = console.get_player
+
+manager = Player_manager.new(p1[0], p1[1], p2[0], p2[1])
 
 console.run(manager.first, manager)
