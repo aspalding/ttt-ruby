@@ -13,7 +13,7 @@ class Board
   end
 
   def valid?(loc)
-    @board[loc] == "-" and loc > -1 and loc < @board.length
+    @board[loc] == "-" && loc > -1 && loc < @board.length
   end
 
   def value_board

@@ -8,17 +8,17 @@ describe Ai do
 
   it "scores a winning game 10" do
     board = ["o", "o", "o","-","-","-","-","-","-"]
-    a.score(board, 0).should eq(10)
+    a.score(board, "o").should eq(10)
   end
 
   it "scores a losing game -10" do
     board = ["x", "x", "x","-","-","-","-","-","-"]
-    a.score(board, 0).should eq(-10)
+    a.score(board, "o").should eq(-10)
   end
 
   it "scores a draw 0" do
     board = ["x", "o", "x","x","o","o","o","x","x"]
-    a.score(board, 0).should eq(0)
+    a.score(board, "o").should eq(0)
   end
 
   it "if game is over, return the score for that branch" do
@@ -65,14 +65,12 @@ describe Ai do
     board = ["x", "x", "o","-","o","-","x","-","-"]
     a.smart_move(board)
     a.choice.should eq(3)
-  end
 
-  it "why this, not that" do
-    board = ["x", "-", "-",
-             "-", "x", "-",
-             "-", "-", "o"]
-    a.smart_move(board)
-    a.choice.should eq(2)
+    #board = ["x", "o", "x",
+    #         "o", "x", "-",
+    #         "-", "-", "-"]
+    #a.smart_move(board)
+    #a.choice.should eq(3)
   end
   
   it "should block a fork" do
@@ -81,6 +79,22 @@ describe Ai do
              "x", "-", "o"]
     a.smart_move(board)
     a.choice.should eq(2)
+  end
+
+  it "another fork" do
+    board = ["-", "-", "x",
+             "-", "x", "-",
+             "o", "-", "-"]
+    a.smart_move(board)
+    a.choice.should eq(0)
+  end
+
+  it "another fork" do
+    board = ["x", "o", "x",
+             "-", "-", "-",
+             "-", "-", "-"]
+    a.smart_move(board)
+    a.choice.should eq(4)
   end
 
 end

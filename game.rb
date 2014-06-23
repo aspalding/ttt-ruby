@@ -7,6 +7,7 @@ require 'player_manager'
 board = Board.new(3)
 console = Console.new(board) 
 
+
 p1 = console.get_player
 p2 = console.get_player
 

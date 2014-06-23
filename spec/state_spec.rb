@@ -58,7 +58,9 @@ describe State do
   end
 
   it "reports status in major diagonal row" do
-    board = ["x", "-", "-","-","x","-","-","-","x"]
+    board = ["x", "-", "-",
+             "-","x","-",
+             "-","-","x"]
     s.diagonal_major?(board, "x").should eq(true)
     board = ["-", "-", "x",
              "-", "-", "x",
@@ -67,6 +69,11 @@ describe State do
     board = ["o", "-", "o",
              "-", "x", "-", 
              "x", "-", "x"]
+    s.diagonal_major?(board, "x").should eq(false)
+
+    board = ["x", "-", "-",
+             "-","x","-",
+             "-","-","-"]
     s.diagonal_major?(board, "x").should eq(false)
   end
 

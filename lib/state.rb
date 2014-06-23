@@ -16,7 +16,7 @@ class State
   end
 
   def tie?(board)
-    full?(board) and not winner?(board, @manager.first) and not winner?(board, @manager.second) 
+    full?(board) && !winner?(board, @manager.first) && !winner?(board, @manager.second) 
   end
 
   def horizontal?(board, mark)
@@ -63,15 +63,15 @@ class State
   end
 
   def winner?(board, mark)
-    horizontal?(board, mark) or vertical?(board, mark) or diagonal_major?(board, mark) or diagonal_minor?(board, mark)
+    horizontal?(board, mark) || vertical?(board, mark) || diagonal_major?(board, mark) || diagonal_minor?(board, mark)
   end
 
   def terminal?(board)
-    winner?(board, @manager.first) or winner?(board, @manager.second) or full?(board)
+    winner?(board, @manager.first) || winner?(board, @manager.second) || tie?(board)
   end
   
   def valid?(board, loc)
-    board[loc] == "-" and loc > -1 and loc < board.length
+    board[loc] == "-" || loc > -1 || loc < board.length
   end
 
 end
