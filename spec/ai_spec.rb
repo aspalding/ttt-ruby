@@ -16,6 +16,18 @@ describe Ai do
     a.score(board, "o").should eq(-10)
   end
 
+  it "doesn't score a draw a -10" do
+    board = ["x", "o", "x",
+             "o", "-", "-",
+             "x", "-", "o"]
+    a.score(board, "o").should eq(0)
+
+    board = ["x", "o", "x",
+             "o", "-", "-",
+             "x", "-", "o"]
+    a.score(board, "x").should eq(0)
+  end
+
   it "scores a draw 0" do
     board = ["x", "o", "x","x","o","o","o","x","x"]
     a.score(board, "o").should eq(0)
@@ -86,7 +98,7 @@ describe Ai do
              "-", "x", "-",
              "o", "-", "-"]
     a.smart_move(board)
-    a.choice.should eq(0)
+    [0, 8].should include(a.choice)
   end
 
   it "another fork" do
@@ -94,7 +106,7 @@ describe Ai do
              "-", "-", "-",
              "-", "-", "-"]
     a.smart_move(board)
-    a.choice.should eq(4)
-  end
+    [4, 6, 8].should include(a.choice)
+  end 
 
 end

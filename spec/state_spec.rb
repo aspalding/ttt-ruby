@@ -149,4 +149,11 @@ describe State do
     s.diagonal_minor?(board, "x").should eq(true)
   end
 
+  it "returns an array of dangerous spots" do
+    board = ["-", "-", "-",
+             "-", "-", "-",
+             "-" ,"-", "-"]
+    s.middle_corner(board).should eq([0, 2, 4, 6, 8])
+  end
+
 end

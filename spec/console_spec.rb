@@ -1,17 +1,17 @@
 require 'board'
 require 'console'
-require 'stringio'
+require 'io_helper'
 
 describe Console do
   let(:b) {Board.new(3)}
-  let(:c) {Console.new(b)}
+  let(:c) {Console.new(b, IoFake.new)}
 
   it "outputs pretty board" do
     pretty_board = "\n- | - | -\n- | - | -\n- | - | -\n\n"
     c.show_board.should eq(pretty_board)
 
     board = Board.new(4)
-    console = Console.new(board)
+    console = Console.new(board, IoFake.new)
     pretty_board = "\n- | - | - | -\n- | - | - | -\n- | - | - | -\n- | - | - | -\n\n" 
     console.show_board.should eq(pretty_board)
   end
@@ -20,5 +20,4 @@ describe Console do
     c.cast_int("jlsfd;l").should eq(-1)
     c.cast_int("").should eq(-1)
   end
-
 end

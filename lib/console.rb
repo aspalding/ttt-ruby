@@ -1,11 +1,12 @@
 require 'state'
 require 'ai'
 require 'player_manager'
+require 'io_helper'
 
 class Console
 
-  def initialize(board)
-    @board =  board
+  def initialize(io)
+    @io = io
   end
 
   def show_board
@@ -17,7 +18,7 @@ class Console
   end
 
   def human_move(mark)
-    puts "Enter a valid move (0..8)"
+    @io.output "Enter a valid move (0..8)"
     location = cast_int(gets.chomp)
     if @board.valid?(location)
       @board.place(mark, location)
@@ -27,11 +28,21 @@ class Console
   end
   
   def get_player
-    puts "enter your mark"
+    @io.output "enter your mark"
     mark = gets.chomp[0]
-    puts "is this player the computer?"
+    @io.output "is this player the computer? (y/n)"
     ai = true if gets.chomp[0] == "y"
     [mark, ai]
+  end
+
+  def get_size
+    @io.output "Size of board? (3/4)"
+    size = cast_int(gets.chomp)
+    if size == 4
+      @board = Board.new(size)
+    else
+      @board = Board.new(size)
+    end
   end
 
   def cast_int(loc)
@@ -44,11 +55,11 @@ class Console
 
   def game_over(mark, state)
     if state.winner?(@board.board, mark)
-      puts show_board
-      puts mark + " is the winner!"
+      @io.output show_board
+      @io.output mark + " is the winner!"
     else
-      puts show_board
-      puts "Tie game!"
+      @io.output show_board
+      @io.output "Tie game!"
     end
   end
 
@@ -62,14 +73,30 @@ class Console
     end 
   end
 
-  def run(mark, manager)
+  def again?
+    @io.output "play again? (y/n)"
+    true if gets.chomp[0] == "y"
+  end
+
+  def game_loop(mark, manager)
     state = State.new(manager)
     if state.terminal?(@board.board)
       game_over(manager.other_mark(mark), state)
     else
-      puts show_board
+      @io.output show_board
       which_turn(mark, manager)
-      run(manager.other_mark(mark), manager)
+      game_loop(manager.other_mark(mark), manager)
+    end
+  end
+
+  def run(manager)
+    game_loop(manager.first, manager)
+    if again?
+      size = Math.sqrt(@board.board.size)
+      @board = Board.new(size)
+      run(manager)
+    else
+      exit
     end
   end
 end

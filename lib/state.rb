@@ -11,6 +11,17 @@ class State
     indices
   end
 
+  def middle_corner(board)
+    indices = []
+    for i in Integer(Math.sqrt(board.size) - 1)..board.size - (Math.sqrt(board.size))
+      indices.push(i) if board[i] == "-" && (i % (Math.sqrt(board.size) - 1)) == 0
+    end
+    for i in 0..board.size - 1
+      indices.push(i) if board[i] == "-" && (i % (Math.sqrt(board.size) + 1)) == 0
+    end
+    indices.sort.uniq
+  end
+
   def full?(board)
     empty_indices(board) == []
   end
@@ -37,7 +48,7 @@ class State
     for col in 0..Math.sqrt(board.size) - 1
       count = 0
       for row in 0..board.size - 1
-        count += 1 if (row % Math.sqrt(board.size)) == 0 and board[col+row] == mark
+        count += 1 if (row % Math.sqrt(board.size)) == 0 && board[col+row] == mark
       end
       return true if count == Math.sqrt(board.size)  
     end
@@ -47,7 +58,7 @@ class State
   def diagonal_major?(board, mark)
     count = 0
     for i in 0..board.size - 1
-      count += 1 if (i % (Math.sqrt(board.size) + 1)) == 0 and board[i] == mark
+      count += 1 if (i % (Math.sqrt(board.size) + 1)) == 0 && board[i] == mark
       return true if count == Math.sqrt(board.size)
     end
     return false
@@ -56,7 +67,7 @@ class State
   def diagonal_minor?(board, mark)
     count = 0
     for i in Integer(Math.sqrt(board.size) - 1)..board.size - (Math.sqrt(board.size))
-      count += 1 if (i % (Math.sqrt(board.size) - 1)) == 0 and board[i] == mark
+      count += 1 if (i % (Math.sqrt(board.size) - 1)) == 0 && board[i] == mark
       return true if count == Math.sqrt(board.size)
     end
     return false
