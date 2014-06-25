@@ -11,17 +11,6 @@ class State
     indices
   end
 
-  def middle_corner(board)
-    indices = []
-    for i in Integer(Math.sqrt(board.size) - 1)..board.size - (Math.sqrt(board.size))
-      indices.push(i) if board[i] == "-" && (i % (Math.sqrt(board.size) - 1)) == 0
-    end
-    for i in 0..board.size - 1
-      indices.push(i) if board[i] == "-" && (i % (Math.sqrt(board.size) + 1)) == 0
-    end
-    indices.sort.uniq
-  end
-
   def full?(board)
     empty_indices(board) == []
   end
@@ -32,9 +21,7 @@ class State
 
   def horizontal?(board, mark)
     count = 0
-      # (0..board.size - 10).each do |column|
-      # end POSSIBLE REFACTOR?
-    for pos in 0..board.size - 1
+    (0..board.size - 1).each do |pos|
       count = 0 if pos % Math.sqrt(board.size) == 0
       if board[pos] == mark
         count += 1
@@ -45,7 +32,7 @@ class State
   end
 
   def vertical?(board, mark)
-    for col in 0..Math.sqrt(board.size) - 1
+    (0..Math.sqrt(board.size) - 1).each do |col|
       count = 0
       for row in 0..board.size - 1
         count += 1 if (row % Math.sqrt(board.size)) == 0 && board[col+row] == mark
@@ -57,8 +44,8 @@ class State
 
   def diagonal_major?(board, mark)
     count = 0
-    for i in 0..board.size - 1
-      count += 1 if (i % (Math.sqrt(board.size) + 1)) == 0 && board[i] == mark
+    (0..board.size - 1).each do |pos|
+      count += 1 if (pos % (Math.sqrt(board.size) + 1)) == 0 && board[pos] == mark
       return true if count == Math.sqrt(board.size)
     end
     return false
@@ -66,8 +53,8 @@ class State
 
   def diagonal_minor?(board, mark)
     count = 0
-    for i in Integer(Math.sqrt(board.size) - 1)..board.size - (Math.sqrt(board.size))
-      count += 1 if (i % (Math.sqrt(board.size) - 1)) == 0 && board[i] == mark
+    (Integer(Math.sqrt(board.size) - 1)..board.size - (Math.sqrt(board.size))).each do |pos|
+      count += 1 if (pos % (Math.sqrt(board.size) - 1)) == 0 && board[pos] == mark
       return true if count == Math.sqrt(board.size)
     end
     return false
@@ -80,9 +67,6 @@ class State
   def terminal?(board)
     winner?(board, @manager.first) || winner?(board, @manager.second) || tie?(board)
   end
-  
-  def valid?(board, loc)
-    board[loc] == "-" || loc > -1 || loc < board.length
-  end
+
 
 end

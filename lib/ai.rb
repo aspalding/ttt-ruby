@@ -9,46 +9,28 @@ class Ai
     @state = State.new(manager)
     @manager = manager
   end
-
+  
   def score(board, mark)
-    #state = State.new(@manager)
-    #if state.winner?(board, mark)
-    #  10
-    #elsif state.winner?(board, @manager.other_mark(mark))
-    #  -10
-    #else
-    #  0
-    #end
-    if @state.tie?(board) || (!@state.winner?(board, @manager.first) && !@state.winner?(board, @manager.second))
-      0
-    else
+    if @state.winner?(board, mark) || @state.winner?(board, @manager.other_mark(mark))
       -10
-    end
-  end
-
-  def score_move(board, mark, depth)
-    return score(board, mark) if @state.terminal?(board) || depth == 0
-    best_score = -1.0/0
-    @state.empty_indices(board).each do |move|
-      board[move] = mark
-      current_score = -1 * score_move(board, @manager.other_mark(mark), depth - 1)
-      if current_score > best_score
-        @choice = move
-        #puts print_debug(board)
-        #puts current_score
-        best_score = current_score
-      end
-      board[move] = "-"
-    end
-    return best_score
+    else
+      0
+    end  
   end
   
-  def print_debug(board)
-    "\n%s | %s | %s\n%s | %s | %s\n%s | %s | %s\n\n" % board
+  def score_moves(board, mark, depth, scores)
+    return score(board, mark) if @state.terminal?(board) || (board.size == 16 && depth == 2)
+    @state.empty_indices(board).each do |move|
+      board[move] = mark
+      scores[move] = -1 * score_moves(board, @manager.other_mark(mark), depth + 1, Hash.new)
+      board[move] = "-"
+    end
+    best_score = scores.values.max
+    depth == 0 ? scores : best_score
   end
-
+  
   def smart_move(board)
-    score_move(board, @mark, 3)
+    @choice = score_moves(board, @mark, 0, Hash.new).max_by{ |k, v| v }[0]
   end
 
 end
