@@ -37,11 +37,11 @@ class Console
 
   def get_size
     @io.output "Size of board? (3/4)"
-    size = cast_int(gets.chomp)
+    size = cast_int(@io.input)
     if size == 4
       @board = Board.new(size)
     else
-      @board = Board.new(size)
+      @board = Board.new(3)
     end
   end
 
@@ -75,7 +75,7 @@ class Console
 
   def again?
     @io.output "play again? (y/n)"
-    true if gets.chomp[0] == "y"
+    true if @io.input[0] == "y"
   end
 
   def game_loop(mark, manager)

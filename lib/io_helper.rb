@@ -1,10 +1,14 @@
 class IoFake
+  def initialize(some_input = "")
+    @some_input = some_input
+  end
+
   def output(text)
     text
   end
 
-  def input(text)
-    text 
+  def input
+    @some_input
   end
 end
 
@@ -13,7 +17,7 @@ class IoProd
     puts text
   end
 
-  def input(text)
+  def input
     gets.chomp
   end
 end
