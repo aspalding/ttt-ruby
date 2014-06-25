@@ -31,12 +31,4 @@ describe Console do
     c.cast_int("").should eq(-1)
   end
 
-  #it "outputs pretty board" do
-  #  pretty_board = "\n- | - | -\n- | - | -\n- | - | -\n\n"
-  #  c.show_board.should eq(pretty_board)
-
-  #  console = Console.new(IoFake.new)
-  #  pretty_board = "\n- | - | - | -\n- | - | - | -\n- | - | - | -\n- | - | - | -\n\n" 
-  #  console.show_board.should eq(pretty_board)
-  #end
 end
