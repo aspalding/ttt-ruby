@@ -29,9 +29,9 @@ class Console
   
   def get_player
     @io.output "enter your mark"
-    mark = gets.chomp[0]
+    mark = @io.input[0]
     @io.output "is this player the computer? (y/n)"
-    ai = true if gets.chomp[0] == "y"
+    ai = true if @io.input[0] == "y"
     [mark, ai]
   end
 

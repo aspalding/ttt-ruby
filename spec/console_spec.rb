@@ -1,5 +1,6 @@
 require 'board'
 require 'console'
+require 'player_manager'
 require 'io_helper'
 
 describe Console do
