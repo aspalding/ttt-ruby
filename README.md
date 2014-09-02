@@ -1,8 +1,11 @@
 ##Ruby Tic Tac Toe
+Install dependencies
+
+`bundle install`
 
 To run all tests
 
-`rspec spec/*`
+`rspec`
 
 To run game
 
